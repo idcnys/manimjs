@@ -301,98 +301,6 @@ class MainFrame{
     objs.forEach(obj => this._add(obj));
 }
 
-// _performLM(aniObj) {
-//     let element = aniObj.obj;
-//     let dir = aniObj.direction;
-//     let distance = aniObj.distance || 200; // total distance to move
-//     let speed = aniObj.speed || 2;         // px per frame
-
-//     aniObj.totalDistance = distance;
-//     aniObj.moved = 0;
-
-//     // store previous coordinates for clearing
-//     aniObj.prev_x_start = element.x_start;
-//     aniObj.prev_y_start = element.y_start;
-
-//     // direction setup
-//     if (dir === "right") {
-//         aniObj.dx = speed;
-//         aniObj.dy = 0;
-//     } else if (dir === "left") {
-//         aniObj.dx = -speed;
-//         aniObj.dy = 0;
-//     } else if (dir === "up") {
-//         aniObj.dx = 0;
-//         aniObj.dy = -speed;
-//     } else if (dir === "down") {
-//         aniObj.dx = 0;
-//         aniObj.dy = speed;
-//     } else {
-//         console.warn("Invalid direction for _performLM");
-//         return;
-//     }
-
-//     aniObj.completed = false;
-
-//     this._performLM_step(aniObj);
-// }
-
-// _performLM_step(aniObj) {
-//     if (aniObj.completed) return;
-
-//     this._drawLMF(aniObj);
-//     this._updateLMF(aniObj);
-
-//     aniObj.moved += Math.abs(aniObj.dx) + Math.abs(aniObj.dy);
-
-//     // check if completed
-//     if (aniObj.moved >= aniObj.totalDistance) {
-//         aniObj.completed = true;
-//         return;
-//     }
-
-//     requestAnimationFrame(() => this._performLM_step(aniObj));
-// }
-
-// _drawLMF(aniObj) {
-//     let rect = aniObj.obj;
-
-//     // clear the previous rectangle only
-//     this.ctx.clearRect(
-//         aniObj.prev_x_start ,
-//         aniObj.prev_y_start,
-//         rect.ww,
-//         rect.hh
-//     );
-
-//     // draw new rectangle
-//     this.ctx.beginPath();
-//     this.ctx.strokeStyle = rect.fillColor || "cyan";
-//     this.ctx.lineWidth = rect.lineWidth || 2;
-
-//     if (rect.fill) {
-//         this.ctx.fillStyle = rect.fillColor || "cyan";
-//         this.ctx.fillRect(rect.x_start, rect.y_start, rect.ww, rect.hh);
-//     } else {
-//         this.ctx.strokeRect(rect.x_start, rect.y_start, rect.ww, rect.hh);
-//     }
-
-//     this.ctx.closePath();
-// }
-
-// _updateLMF(aniObj) {
-//     let rect = aniObj.obj;
-
-//     // update coordinates
-//     rect.x_start += aniObj.dx;
-//     rect.y_start += aniObj.dy;
-//     rect.x_end += aniObj.dx;
-//     rect.y_end += aniObj.dy;
-
-//     // update previous for next frame
-//     aniObj.prev_x_start = rect.x_start;
-//     aniObj.prev_y_start = rect.y_start;
-// }
 
 _performLM(aniObj) {
     let element = aniObj.obj;
@@ -469,6 +377,9 @@ _updateLMF(aniObj) {
     else if (obj.type === "text") {
         obj.x += aniObj.dx;
         obj.y += aniObj.dy;
+    }else if(obj.type==="dot"){
+        obj.x += aniObj.dx;
+        obj.y += aniObj.dy;
     }
 }
 
@@ -503,6 +414,16 @@ _drawLMF(aniObj, erase = false) {
             this.ctx.stroke();
             this.ctx.stroke();
             this.ctx.stroke();
+        }else if(obj.type =="dot"){
+            this.ctx.beginPath();
+            this.ctx.arc(obj.x, obj.y, obj.r, 0, Math.PI * 2); // Full circle
+            this.ctx.fillStyle = this.bgColor || "#000";
+            this.ctx.fill();
+            this.ctx.fill();
+            this.ctx.fill();
+            this.ctx.fill();
+            this.ctx.fill();
+            
         }
         ctx.restore();
         return;
@@ -541,11 +462,30 @@ _drawLMF(aniObj, erase = false) {
         this.ctx.stroke();
         this.ctx.stroke();
         this.ctx.stroke();
+    }else if(obj.type =="dot"){
+            this.ctx.beginPath();
+            this.ctx.arc(obj.x, obj.y, obj.r, 0, Math.PI * 2); // Full circle
+            this.ctx.fillStyle = obj.strokeColor;
+            this.ctx.fill();
     }
     ctx.restore();
 }
 
+remove(obj) {
+    let nt = new Task("remove",obj);
+    this.tasks.push(nt);
 
+    }
+    
+   
+     _eraseObject(obj) {
+        const tempAniObj = {
+            obj: obj,
+            lineWidth: obj.lineWidth || 1 
+        };
+        this._drawLMF(tempAniObj, true);
+        
+    }
 
 
 
@@ -760,20 +700,6 @@ _drawLMF(aniObj, erase = false) {
             }
         }
 
-        // if (r.y === r.y_start && r.x < r.x_end) {
-        //     r.x += amountperstep;
-        //     if (r.x > r.x_end) r.x = r.x_end;
-        //     r.started = true;
-        // } else if (r.x === r.x_end && r.y < r.y_end) {
-        //     r.y += amountperstep;
-        //     if (r.y > r.y_end) r.y = r.y_end;
-        // } else if (r.y === r.y_end && r.x > r.x_start) {
-        //     r.x -= amountperstep;
-        //     if (r.x < r.x_start) r.x = r.x_start;
-        // } else if (r.x === r.x_start && r.y > r.y_start) {
-        //     r.y -= amountperstep;
-        //     if (r.y < r.y_start) r.y = r.y_start;
-        // }
 
         // // finish
         if (r.started && r.x === r.x_start && r.y === r.y_start) {
@@ -1009,7 +935,12 @@ _waitUntilFinish(obj) {
             else if (tp == "linearmotion") {
                 this._performLM(obj);
                 await this._waitUntilFinish(obj);
+            }else if(tp == "remove"){
+                this._eraseObject(obj);
+                await this._waitUntilFinish(obj);
             }
+
+            // this.tasks.shift();
 
             if (i + 1 == this.tasks.length && this.isStreamStarted) {
                 this.recorder.stop();
@@ -1056,15 +987,4 @@ _waitUntilFinish(obj) {
 }
 
 
-const frame = new MainFrame("canvas",false);
-
-let rect = new Rectangle(200,300,100,80);
-rect.label=false;
-let cir = new Circle(500,500,100);
-let line = new Line(100,100,60,0);
-let lm = new LinearMotion(rect,"down",100);
-let lm2 = new LinearMotion(cir,"left",20);
-let lm3 = new LinearMotion(line,"right",100);
-frame.add(rect,lm,cir,lm2,line,lm3);
-
-frame.play();
+export {Colors, Rectangle, LinearMotion, Circle, Text, Line, Dot, CoordinateSystem, TextBox, Parser,Task,ArrowTip,Graph,MainFrame};
