@@ -463,10 +463,8 @@ _updateLMF(aniObj) {
         obj.cy += aniObj.dy;
     }
     else if (obj.type === "line") {
-        obj.x1 += aniObj.dx;
-        obj.x2 += aniObj.dx;
-        obj.y1 += aniObj.dy;
-        obj.y2 += aniObj.dy;
+        obj.x += aniObj.dx;
+        obj.y += aniObj.dy;
     }
     else if (obj.type === "text") {
         obj.x += aniObj.dx;
@@ -493,6 +491,18 @@ _drawLMF(aniObj, erase = false) {
             ctx.beginPath();
             ctx.arc(obj.cx, obj.cy, obj.r + pad, 0, Math.PI * 2);
             ctx.fill();
+        }else if(obj.type=="line"){
+            this.ctx.beginPath();
+            this.ctx.moveTo(obj.x, obj.y);
+            // this.ctx.lineTo(obj.x+obj.length, obj.y);
+            this.ctx.lineTo(obj.x+obj.length, obj.y-(Math.sin(obj.angle)*obj.length));
+        
+            this.ctx.strokeStyle = this.bgColor || "#000";
+            this.ctx.stroke();
+            this.ctx.stroke();
+            this.ctx.stroke();
+            this.ctx.stroke();
+            this.ctx.stroke();
         }
         ctx.restore();
         return;
@@ -520,6 +530,17 @@ _drawLMF(aniObj, erase = false) {
         
         if (obj.fill) ctx.fillStyle = obj.fillColor;
         obj.fill ? ctx.fill() : ctx.stroke();
+    }else if(obj.type==="line"){
+        this.ctx.beginPath();
+        this.ctx.moveTo(obj.x, obj.y);
+
+        this.ctx.lineTo(obj.x+obj.length, obj.y-(Math.sin(obj.angle)*obj.length));
+        this.ctx.strokeStyle = obj.strokeColor;
+        this.ctx.stroke();
+        this.ctx.stroke();
+        this.ctx.stroke();
+        this.ctx.stroke();
+        this.ctx.stroke();
     }
     ctx.restore();
 }
@@ -573,7 +594,7 @@ _drawLMF(aniObj, erase = false) {
             
         }
         
-        else if (obj.type == "rect") {
+        else if (obj.type == "rect" && obj.label) {
 
             let txt = obj.labelText;
             let centerlabel = new Text(txt, (obj.x_start + obj.ww), (obj.y_start) - 15);
@@ -1038,9 +1059,12 @@ _waitUntilFinish(obj) {
 const frame = new MainFrame("canvas",false);
 
 let rect = new Rectangle(200,300,100,80);
+rect.label=false;
 let cir = new Circle(500,500,100);
+let line = new Line(100,100,60,0);
 let lm = new LinearMotion(rect,"down",100);
 let lm2 = new LinearMotion(cir,"left",20);
-frame.add(rect,lm,cir,lm2);
+let lm3 = new LinearMotion(line,"right",100);
+frame.add(rect,lm,cir,lm2,line,lm3);
 
 frame.play();
