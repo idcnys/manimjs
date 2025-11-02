@@ -1,5 +1,106 @@
-class Rectangle {
-    constructor(x, y, width, height, speed = 1, fill = false, fillColor = "cyan") {
+class Colors { 
+    constructor() {
+    this.BLACK = "#000000";
+    this.BLUE = "#58C4DD";
+    this.BLUE_A = "#C7E9F1";
+    this.BLUE_B = "#9CDCEB";
+    this.BLUE_C = "#58C4DD";
+    this.BLUE_D = "#29ABCA";
+    this.BLUE_E = "#236B8E";
+    this.DARKER_GRAY = "#222222";
+    this.DARKER_GREY = "#222222";
+    this.DARK_BLUE = "#236B8E";
+    this.DARK_BROWN = "#8B4513";
+    this.DARK_GRAY = "#444444";
+    this.DARK_GREY = "#444444";
+    this.GOLD = "#F0AC5F";
+    this.GOLD_A = "#F7C797";
+    this.GOLD_B = "#F9B775";
+    this.GOLD_C = "#F0AC5F";
+    this.GOLD_D = "#E1A158";
+    this.GOLD_E = "#C78D46";
+    this.GRAY = "#888888";
+    this.GRAY_A = "#DDDDDD";
+    this.GRAY_B = "#BBBBBB";
+    this.GRAY_BROWN = "#736357";
+    this.GRAY_C = "#888888";
+    this.GRAY_D = "#444444";
+    this.GRAY_E = "#222222";
+    this.GREEN = "#83C167";
+    this.GREEN_A = "#C9E2AE";
+    this.GREEN_B = "#A6CF8C";
+    this.GREEN_C = "#83C167";
+    this.GREEN_D = "#77B05D";
+    this.GREEN_E = "#699C52";
+    this.GREY = "#888888";
+    this.GREY_A = "#DDDDDD";
+    this.GREY_B = "#BBBBBB";
+    this.GREY_BROWN = "#736357";
+    this.GREY_C = "#888888";
+    this.GREY_D = "#444444";
+    this.GREY_E = "#222222";
+    this.LIGHTER_GRAY = "#DDDDDD";
+    this.LIGHTER_GREY = "#DDDDDD";
+    this.LIGHT_BROWN = "#CD853F";
+    this.LIGHT_GRAY = "#BBBBBB";
+    this.LIGHT_GREY = "#BBBBBB";
+    this.LIGHT_PINK = "#DC75CD";
+    this.LOGO_BLACK = "#343434";
+    this.LOGO_BLUE = "#525893";
+    this.LOGO_GREEN = "#87C2A5";
+    this.LOGO_RED = "#E07A5F";
+    this.LOGO_WHITE = "#ECE7E2";
+    this.MAROON = "#C55F73";
+    this.MAROON_A = "#ECABC1";
+    this.MAROON_B = "#EC92AB";
+    this.MAROON_C = "#C55F73";
+    this.MAROON_D = "#A24D61";
+    this.MAROON_E = "#94424F";
+    this.ORANGE = "#FF862F";
+    this.PINK = "#D147BD";
+    this.PURE_BLUE = "#0000FF";
+    this.PURE_GREEN = "#00FF00";
+    this.PURE_RED = "#FF0000";
+    this.PURPLE = "#9A72AC";
+    this.PURPLE_A = "#CAA3E8";
+    this.PURPLE_B = "#B189C6";
+    this.PURPLE_C = "#9A72AC";
+    this.PURPLE_D = "#715582";
+    this.PURPLE_E = "#644172";
+    this.RED = "#FC6255";
+    this.RED_A = "#F7A1A3";
+    this.RED_B = "#FF8080";
+    this.RED_C = "#FC6255";
+    this.RED_D = "#E65A4C";
+    this.RED_E = "#CF5044";
+    this.TEAL = "#5CD0B3";
+    this.TEAL_A = "#ACEAD7";
+    this.TEAL_B = "#76DDC0";
+    this.TEAL_C = "#5CD0B3";
+    this.TEAL_D = "#55C1A7";
+    this.TEAL_E = "#49A88F";
+    this.WHITE = "#FFFFFF";
+    this.YELLOW = "#FFFF00";
+    this.YELLOW_A = "#FFF1B6";
+    this.YELLOW_B = "#FFEA94";
+    this.YELLOW_C = "#FFFF00";
+    this.YELLOW_D = "#F4D345";
+    this.YELLOW_E = "#E8C11C";
+}    
+}
+
+class LinearMotion{
+    constructor(obj,direction,distance){
+        this.obj = obj;
+        this.direction = direction;
+        this.distance= distance;
+        this.type="linearmotion";
+        this.completed=false;
+    }
+   
+}
+class Rectangle{
+    constructor(x, y, width, height,strokeColor="yellow",lineWidth=1, fill = false, fillColor,label=false,labelText="Rectangle",speed=1) {
         this.x_start = x;
         this.y_start = y;
         this.ww = width;
@@ -12,14 +113,20 @@ class Rectangle {
         this.completed = false;
         this.started = false;
         this.speed = speed;
-        this.labelText = "Rectangle";
+        this.label=label;
+        this.labelText = labelText;
+        this.strokeColor=strokeColor;
         this.fill = fill;
         this.fillColor = fillColor;
+        this.lineWidth=lineWidth;
+        this.dir ="right";
+        this._dx=0;
+        this._dy=0;
     }
 }
 
 class Circle {
-    constructor(center_x, center_y, radius, center = true, speed = 1, fill = false, fillColor = "cyan") {
+    constructor(center_x, center_y, radius,strokeColor="cyan",fill = false, fillColor = "cyan",lineWidth=1, centerlabel = true, speed = 1, ) {
         this.cx = center_x;
         this.cy = center_y;
         this.r = radius;
@@ -28,25 +135,28 @@ class Circle {
         this.type = "cir";
         this.completed = false;
         this.speed = speed;
-        this.center = center;
+        this.centerlabel = centerlabel;
+        this.strokeColor = strokeColor;
         this.fill = fill;
         this.fillColor = fillColor;
+        this.lineWidth=lineWidth;
     }
 }
 
 class Text {
-    constructor(text, x, y, color = "white", size = "18px", font = "Arial") {
+    constructor(text, x, y, strokeColor = "white", size = "18px", font = "Arial") {
         this.text = text;
         this.x = x;
         this.y = y;
-        this.fillStyle = color;
+        this.strokeColor = strokeColor;
         this.font = size + " " + font;
         this.type = "text";
         this.completed = false;
     }
 }
+
 class Line {
-    constructor(x, y, length, dashed = false, arrowtip = false, dbltip = false,label = false, labelText = "", color = "yellow", angle = 0) {
+    constructor(x, y, length,angle=0,strokeColor="yellow",label = false, labelText = "", dashed = false, arrowtip = false, dbltip = false,speed=1) {
         this.x = x;
         this.y = y;
         this.length = length;
@@ -55,56 +165,66 @@ class Line {
         this.endY = this.y - this.length * Math.sin(this.angle);
         this.currentX = this.x; // trackin progress
         this.currentY = this.y;
-        this.fillStyle = color;
         this.completed = false;
         this.type = "line";
-        this.speed = 1;
+        this.speed = speed;
         this.dashed = dashed;
         this.arrowtip = arrowtip;
         this.dbltip = dbltip;
+        this.strokeColor = strokeColor;
         this.label = label;
         this.labelText = labelText;
-        this.autoDisappear = false;
+        this.dashwidth = 10;
+        this.dashgaph = 5;
 
     }
 }
+
 class Dot {
-    constructor(x, y, r = 3) {
+    constructor(x, y, r = 3,strokeColor="red") {
         this.x = x;
         this.y = y;
         this.r = r;
-        this.color = "red";
+        this.strokeColor = strokeColor;
         this.type = "dot";
         this.completed = false;
     }
 }
+
 class ArrowTip {
-    constructor(x, y, angle, size = 15,color="cyan", face = "forwards") {
+    constructor(x, y, angle, size = 15,strokeColor="cyan", face = "forwards") {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.color = color;
+        this.strokeColor = strokeColor;
         this.type = "arrowtip";
         this.completed = false;
         this.face = face;
         this.angle = angle;
     }
 }
+
 class Task {
     constructor(type, obj) {
         this.type = type;
         this.obj = obj;
     }
 }
+
 class CoordinateSystem {
-    constructor(x, y, labeled = true) {
+    constructor(x, y, labeled = true,spacing=10,axisColor="white",tickColor="rgba(255,255,255,0.7)",fontsize=12,font="Courier") {
         this.x = x;
         this.y = y;
         this.labeled = labeled;
         this.type = "graph";
         this.completed = false;
+        this.spacing = spacing;
+        this.axisColor = axisColor;
+        this.tickColor = tickColor;
+        this.font = String(fontsize)+"px "+font;
     }
 }
+
 class Parser {
     constructor(origin_x, origin_y) {
         this.ox = origin_x;
@@ -119,6 +239,7 @@ class Parser {
         };
     }
 }
+
 class TextBox {
     constructor(txt, x, y, textcolor = "white", boxcolor = "white", angle = 0) {
         this.text = txt;
@@ -131,10 +252,11 @@ class TextBox {
         this.completed = false;
     }
 }
+
 class Graph {
-    constructor(expr, color = "lime", minX = -360, maxX = 360, step = 1, scale = 1) {
+    constructor(expr, strokeColor = "lime", minX = -360, maxX = 360, step = 1, scale = 1) {
         this.expr = expr; 
-        this.color = color;
+        this.strokeColor = strokeColor;
         this.minX = minX;
         this.maxX = maxX;
         this.step = step;
@@ -142,9 +264,11 @@ class Graph {
         this.type = "graphplot";
         this.completed = false;
         this.points = [];
+        this.lineWidth=1;
     }
 }
-class MainFrame {
+
+class MainFrame{
     constructor(canvasId, stream = false, filename = "canvas-animation", background_color = "#000") {
         this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext("2d");
@@ -168,15 +292,244 @@ class MainFrame {
 
         this.originX = 0;
         this.originY = 0;
-
     }
     setOrigin(x, y) {
         this.originX = x;
         this.originY = y;
     }
+    add(...objs) {
+    objs.forEach(obj => this._add(obj));
+}
+
+// _performLM(aniObj) {
+//     let element = aniObj.obj;
+//     let dir = aniObj.direction;
+//     let distance = aniObj.distance || 200; // total distance to move
+//     let speed = aniObj.speed || 2;         // px per frame
+
+//     aniObj.totalDistance = distance;
+//     aniObj.moved = 0;
+
+//     // store previous coordinates for clearing
+//     aniObj.prev_x_start = element.x_start;
+//     aniObj.prev_y_start = element.y_start;
+
+//     // direction setup
+//     if (dir === "right") {
+//         aniObj.dx = speed;
+//         aniObj.dy = 0;
+//     } else if (dir === "left") {
+//         aniObj.dx = -speed;
+//         aniObj.dy = 0;
+//     } else if (dir === "up") {
+//         aniObj.dx = 0;
+//         aniObj.dy = -speed;
+//     } else if (dir === "down") {
+//         aniObj.dx = 0;
+//         aniObj.dy = speed;
+//     } else {
+//         console.warn("Invalid direction for _performLM");
+//         return;
+//     }
+
+//     aniObj.completed = false;
+
+//     this._performLM_step(aniObj);
+// }
+
+// _performLM_step(aniObj) {
+//     if (aniObj.completed) return;
+
+//     this._drawLMF(aniObj);
+//     this._updateLMF(aniObj);
+
+//     aniObj.moved += Math.abs(aniObj.dx) + Math.abs(aniObj.dy);
+
+//     // check if completed
+//     if (aniObj.moved >= aniObj.totalDistance) {
+//         aniObj.completed = true;
+//         return;
+//     }
+
+//     requestAnimationFrame(() => this._performLM_step(aniObj));
+// }
+
+// _drawLMF(aniObj) {
+//     let rect = aniObj.obj;
+
+//     // clear the previous rectangle only
+//     this.ctx.clearRect(
+//         aniObj.prev_x_start ,
+//         aniObj.prev_y_start,
+//         rect.ww,
+//         rect.hh
+//     );
+
+//     // draw new rectangle
+//     this.ctx.beginPath();
+//     this.ctx.strokeStyle = rect.fillColor || "cyan";
+//     this.ctx.lineWidth = rect.lineWidth || 2;
+
+//     if (rect.fill) {
+//         this.ctx.fillStyle = rect.fillColor || "cyan";
+//         this.ctx.fillRect(rect.x_start, rect.y_start, rect.ww, rect.hh);
+//     } else {
+//         this.ctx.strokeRect(rect.x_start, rect.y_start, rect.ww, rect.hh);
+//     }
+
+//     this.ctx.closePath();
+// }
+
+// _updateLMF(aniObj) {
+//     let rect = aniObj.obj;
+
+//     // update coordinates
+//     rect.x_start += aniObj.dx;
+//     rect.y_start += aniObj.dy;
+//     rect.x_end += aniObj.dx;
+//     rect.y_end += aniObj.dy;
+
+//     // update previous for next frame
+//     aniObj.prev_x_start = rect.x_start;
+//     aniObj.prev_y_start = rect.y_start;
+// }
+
+_performLM(aniObj) {
+    let element = aniObj.obj;
+    let dir = aniObj.direction;
+    let distance = aniObj.distance || 200;
+    let speed = aniObj.speed || 2;
+
+    aniObj.totalDistance = distance;
+    aniObj.moved = 0;
+    aniObj.completed = false;
+
+    // direction setup
+    if (dir === "right") {
+        aniObj.dx = speed;
+        aniObj.dy = 0;
+    } else if (dir === "left") {
+        aniObj.dx = -speed;
+        aniObj.dy = 0;
+    } else if (dir === "up") {
+        aniObj.dx = 0;
+        aniObj.dy = -speed;
+    } else if (dir === "down") {
+        aniObj.dx = 0;
+        aniObj.dy = speed;
+    } else {
+        console.warn("Invalid direction for _performLM()");
+        return;
+    }
+
+    this._performLM_step(aniObj);
+}
+
+_performLM_step(aniObj) {
+    if (aniObj.completed) return;
+
+    // erase old object (draw bg color)
+    this._drawLMF(aniObj, true);
+
+    // update position
+    this._updateLMF(aniObj);
+
+    //new obj
+    this._drawLMF(aniObj, false);
+
+    aniObj.moved += Math.abs(aniObj.dx) + Math.abs(aniObj.dy);
+
+    if (aniObj.moved >= aniObj.totalDistance) {
+        aniObj.completed = true;
+        return;
+    }
+
+    requestAnimationFrame(() => this._performLM_step(aniObj));
+}
+
+_updateLMF(aniObj) {
+    const obj = aniObj.obj;
+
+    if (obj.type === "rect") {
+        obj.x_start += aniObj.dx;
+        obj.y_start += aniObj.dy;
+        obj.x_end += aniObj.dx;
+        obj.y_end += aniObj.dy;
+        obj.x = obj.x_start;
+        obj.y = obj.y_start;
+    }
+    else if (obj.type === "cir") {
+        obj.cx += aniObj.dx;
+        obj.cy += aniObj.dy;
+    }
+    else if (obj.type === "line") {
+        obj.x1 += aniObj.dx;
+        obj.x2 += aniObj.dx;
+        obj.y1 += aniObj.dy;
+        obj.y2 += aniObj.dy;
+    }
+    else if (obj.type === "text") {
+        obj.x += aniObj.dx;
+        obj.y += aniObj.dy;
+    }
+}
+
+_drawLMF(aniObj, erase = false) {
+    const obj = aniObj.obj;
+    const ctx = this.ctx;
+    const pad = obj.lineWidth + 2; 
+
+    if (erase) {
+        ctx.save();
+        ctx.fillStyle = this.bgColor || "#000";
+        if (obj.type === "rect") {
+            ctx.fillRect(
+                obj.x_start - pad,
+                obj.y_start - pad,
+                obj.ww + pad * 2,
+                obj.hh + pad * 2
+            );
+        } else if (obj.type === "cir") {
+            ctx.beginPath();
+            ctx.arc(obj.cx, obj.cy, obj.r + pad, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.restore();
+        return;
+    }
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineWidth = obj.lineWidth;
+    ctx.strokeStyle = obj.strokeColor;
+
+    if (obj.type === "rect") {
+        if (obj.fill) {
+            ctx.fillStyle = obj.fillColor;
+            ctx.fillRect(obj.x_start, obj.y_start, obj.ww, obj.hh);
+        } else {
+            ctx.strokeRect(obj.x_start, obj.y_start, obj.ww, obj.hh);
+            ctx.strokeRect(obj.x_start, obj.y_start, obj.ww, obj.hh);
+            ctx.strokeRect(obj.x_start, obj.y_start, obj.ww, obj.hh);
+        }
+    } else if (obj.type === "cir") {
+        ctx.beginPath();
+        ctx.arc(obj.cx, obj.cy, obj.r, 0, Math.PI * 2);
+        ctx.arc(obj.cx, obj.cy, obj.r, 0, Math.PI * 2);
+        ctx.arc(obj.cx, obj.cy, obj.r, 0, Math.PI * 2);
+        
+        if (obj.fill) ctx.fillStyle = obj.fillColor;
+        obj.fill ? ctx.fill() : ctx.stroke();
+    }
+    ctx.restore();
+}
 
 
-    add(obj) {
+
+
+
+
+    _add(obj) {
 
         let new_task = new Task(obj.type, obj);
 
@@ -192,34 +545,35 @@ class MainFrame {
             let nt2 = new Task(centerlabel.type, centerlabel);
             this.tasks.push(nt2);
             //adding dashed line from center 
-            let dline = new Line(obj.cx, obj.cy, obj.r, true);
+            let dline = new Line(obj.cx, obj.cy, obj.r);
+            dline.dashed=true;
             let nt3 = new Task(dline.type, dline);
             this.tasks.push(nt3);
 
         } else if (obj.type == "line" && obj.arrowtip) {
             //adding arrowtip on line edge;
             let at = new ArrowTip((obj.endX + 1), (obj.endY), -obj.angle);
-            at.color=obj.fillStyle;
+            at.strokeColor=obj.strokeColor;
             let nt4 = new Task(at.type, at);
             this.tasks.push(nt4);
 
-            if (obj.dbltip) {
+        }
+        else if (obj.type == "line" && obj.dbltip) {
                 let at = new ArrowTip((obj.x) - 1, (obj.y), -obj.angle);
-                at.color=obj.fillStyle;
+                at.strokeColor=obj.strokeColor;
                 at.face = "backwards";
                 let nt4 = new Task(at.type, at);
                 this.tasks.push(nt4);
-            }
-
-            if (obj.label) {
-                let txt = obj.labelText;
-                let centerlabel = new Text(txt, (obj.x), (obj.y) - 15);
-                let nt2 = new Task(centerlabel.type, centerlabel);
-                this.tasks.push(nt2);
-            }
-
-
-        } else if (obj.type == "rect") {
+        }
+        else if(obj.type == "line" && obj.label){
+            let txt = obj.labelText;
+            let centerlabel = new Text(txt, (obj.x), (obj.y) - 15);
+            let nt2 = new Task(centerlabel.type, centerlabel);
+            this.tasks.push(nt2);
+            
+        }
+        
+        else if (obj.type == "rect") {
 
             let txt = obj.labelText;
             let centerlabel = new Text(txt, (obj.x_start + obj.ww), (obj.y_start) - 15);
@@ -232,7 +586,8 @@ class MainFrame {
             const textHeight = 20; // approximated
 
             //rect around txt
-            let bbox = new Rectangle(obj.x - 15, obj.y - 20, 12 * (obj.text.length) - 5, 30, 3);
+            let bbox = new Rectangle(obj.x - 15, obj.y - 20, 12 * (obj.text.length) - 5, 30);
+            bbox.speed=3;
 
            //txt
             let centertext = new Text(obj.text, obj.x, obj.y, obj.textcolor, "18px", "Arial");
@@ -248,10 +603,10 @@ class MainFrame {
         else if (obj.type == "graph") {
             this.setOrigin(obj.x, obj.y);
 
-            const spacing = 10;
-            const axisColor = "white";
-            const tickColor = "rgba(255,255,255,0.7)";
-            const font = "12px Courier";
+            const spacing = obj.spacing;
+            const axisColor = obj.axisColor;
+            const tickColor = obj.tickColor;
+            const font = obj.font;
 
             const width = this.canvas.width / this.dpr;
             const height = this.canvas.height / this.dpr;
@@ -260,6 +615,7 @@ class MainFrame {
 
             //x&y axis
             let xAxis = new Line(0, originY, width, false, true, true, false, "", axisColor, 0);
+
             let yAxis = new Line(originX, height, height, false, true, true, false, "", axisColor, 90);
             xAxis.speed = 100;
             yAxis.speed = 100;
@@ -276,8 +632,8 @@ class MainFrame {
                 const ctx = this.ctx;
                 ctx.save();
                 ctx.font = font;
-                ctx.fillStyle = "white";
-                ctx.strokeStyle = "white";
+                ctx.fillStyle = obj.tickColor;
+                ctx.strokeStyle = obj.tickColor;
                 ctx.lineWidth = 1;
 
                 //minor & major ticks ----
@@ -332,13 +688,12 @@ class MainFrame {
 }
 
 
-
     }
 
-    drawRect(rectObj, stroke_color = "yellow", line_width = 2) {
+    drawRect(rectObj) {
         this.ctx.beginPath();
         this.ctx.moveTo(rectObj.x_start, rectObj.y_start);
-        this._drawStep(rectObj, stroke_color, line_width, rectObj.speed);
+        this._drawStep(rectObj, rectObj.strokeColor, rectObj.lineWidth, rectObj.speed);
         console.log("Draw rect func");
 
         if(rectObj.fill) {
@@ -354,22 +709,52 @@ class MainFrame {
         this.ctx.lineWidth = line_width;
         this.ctx.stroke();
 
-        if (r.y === r.y_start && r.x < r.x_end) {
-            r.x += amountperstep;
-            if (r.x > r.x_end) r.x = r.x_end;
-            r.started = true;
-        } else if (r.x === r.x_end && r.y < r.y_end) {
-            r.y += amountperstep;
-            if (r.y > r.y_end) r.y = r.y_end;
-        } else if (r.y === r.y_end && r.x > r.x_start) {
-            r.x -= amountperstep;
-            if (r.x < r.x_start) r.x = r.x_start;
-        } else if (r.x === r.x_start && r.y > r.y_start) {
-            r.y -= amountperstep;
-            if (r.y < r.y_start) r.y = r.y_start;
+        if(!r.completed){
+            if(r.dir=="right"){
+                r.started=true;
+                r.x += amountperstep;
+                if(r.x>r.x_end){
+                    r.dir="down";
+                    r.y += r.x_end-r.x;
+                    r.x = r.x_end;
+                }
+            }else if(r.dir=="down"){
+                r.y += amountperstep;
+                if (r.y > r.y_end) {
+                    r.dir="left";
+                    r.x -= r.y_end-r.y;
+                    r.y = r.y_end
+                };
+            }else if(r.dir=="left"){
+                r.x -= amountperstep;
+                 if (r.x < r.x_start) {
+                    r.dir="up";
+
+                    r.x = r.x_start};
+            }else if(r.dir=="up"){
+                r.y -= amountperstep;
+                if (r.y < r.y_start) {
+                    r.y = r.y_start;
+                }
+            }
         }
 
-        // finish
+        // if (r.y === r.y_start && r.x < r.x_end) {
+        //     r.x += amountperstep;
+        //     if (r.x > r.x_end) r.x = r.x_end;
+        //     r.started = true;
+        // } else if (r.x === r.x_end && r.y < r.y_end) {
+        //     r.y += amountperstep;
+        //     if (r.y > r.y_end) r.y = r.y_end;
+        // } else if (r.y === r.y_end && r.x > r.x_start) {
+        //     r.x -= amountperstep;
+        //     if (r.x < r.x_start) r.x = r.x_start;
+        // } else if (r.x === r.x_start && r.y > r.y_start) {
+        //     r.y -= amountperstep;
+        //     if (r.y < r.y_start) r.y = r.y_start;
+        // }
+
+        // // finish
         if (r.started && r.x === r.x_start && r.y === r.y_start) {
             r.completed = true;
             return;
@@ -378,10 +763,8 @@ class MainFrame {
         requestAnimationFrame(() => this._drawStep(r, stroke_color, line_width, amountperstep));
     }
 
-
-
-    drawCircle(cirObj, stroke_color = "cyan", line_width = 2) {
-        this._drawArc(cirObj, stroke_color, line_width*this.dpr, cirObj.speed);
+    drawCircle(cirObj) {
+        this._drawArc(cirObj, cirObj.strokeColor, cirObj.lineWidth*this.dpr, cirObj.speed);
     }
 
     _drawArc(c, stroke_color, line_width, amountperstep) {
@@ -406,7 +789,8 @@ class MainFrame {
             return;
         }
     }
-    __sleep__(ms) {
+
+     __sleep__(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
@@ -426,21 +810,19 @@ class MainFrame {
         let y = obj.y;
 
         this.ctx.font = obj.font;
-        this.ctx.fillStyle = obj.fillStyle;
+        this.ctx.fillStyle = obj.strokeColor;
         this.ctx.fillText(txt, x, y);
         await this.__sleep__(1000);
         obj.completed = true;
         return;
-
     }
 
-
-    drawLine(lineObj) {
+     drawLine(lineObj) {
         this.ctx.beginPath();
         this.ctx.moveTo(lineObj.x, lineObj.y);
-        this.ctx.strokeStyle = lineObj.fillStyle;
+        this.ctx.strokeStyle = lineObj.strokeColor;
         if (lineObj.dashed) {
-            this.ctx.setLineDash([10, 5]);
+            this.ctx.setLineDash([lineObj.dashwidth, lineObj.dashgaph]);
         }
         this._drawLine(lineObj);
     }
@@ -469,7 +851,7 @@ class MainFrame {
         const x = arrowObj.x;
         const y = arrowObj.y;
         const size = arrowObj.size;
-        const color = arrowObj.color;
+        const color = arrowObj.strokeColor;
 
 
         let tipAngle = arrowObj.angle;
@@ -494,7 +876,7 @@ class MainFrame {
 
         this.ctx.beginPath();
         this.ctx.arc(obj.x, obj.y, obj.r, 0, Math.PI * 2); // Full circle
-        this.ctx.fillStyle = obj.color;
+        this.ctx.fillStyle = obj.strokeColor;
         this.ctx.fill();
         obj.completed = true;
         await this.__sleep__(1000);
@@ -502,10 +884,10 @@ class MainFrame {
         return;
     }
 
-    drawGraph(graphObj) {
+       drawGraph(graphObj) {
 
     this.ctx.beginPath();
-    this.ctx.strokeStyle = graphObj.color;
+    this.ctx.strokeStyle = graphObj.strokeColor;
     this.ctx.lineWidth = 2*this.dpr;
     this._drawGraphStep(graphObj, graphObj.minX);
 }
@@ -542,8 +924,8 @@ _drawGraphStep(graphObj, x) {
     if (graphObj.points.length === 0) this.ctx.moveTo(pt.x, pt.y);
     else this.ctx.lineTo(pt.x, pt.y);
 
-    this.ctx.strokeStyle = graphObj.color;
-    this.ctx.lineWidth = 1;
+    this.ctx.strokeStyle = graphObj.strokeColor;
+    this.ctx.lineWidth = graphObj.lineWidth;
     this.ctx.stroke();
 
     graphObj.points.push(pt);
@@ -558,10 +940,7 @@ _drawGraphStep(graphObj, x) {
 }
 
 
-
-
-
-    _waitUntilFinish(obj) {
+_waitUntilFinish(obj) {
         return new Promise((resolve) => {
             const check = () => {
                 if (!obj.completed) requestAnimationFrame(check);
@@ -605,11 +984,12 @@ _drawGraphStep(graphObj, x) {
             }else if (tp == "graphplot") {
                 this.drawGraph(obj);
                 await this._waitUntilFinish(obj);
-}
+            }
+            else if (tp == "linearmotion") {
+                this._performLM(obj);
+                await this._waitUntilFinish(obj);
+            }
 
-
-
-           
             if (i + 1 == this.tasks.length && this.isStreamStarted) {
                 this.recorder.stop();
             }
@@ -655,60 +1035,12 @@ _drawGraphStep(graphObj, x) {
 }
 
 
+const frame = new MainFrame("canvas",false);
 
-
-//USAGE 
-const frame = new MainFrame("canvas",true);
-let rect = new Rectangle(400,400,100,100);
-rect.labelText = "Manim is great";
-let cir = new Circle(200,200,100,true);
-cir.speed=15;
-let line = new Line(500,300,100);
-line.speed=100;
-let dline = new Line(300,300,170,true,true);
-
-let aline = new Line(600,650,500,true);
-aline.angle=45;
-aline.speed=50;
-
-let r1 = new Rectangle(100,700,100,60);
-
-let tb = new TextBox("I am a toy manim",100,500);
-let txt = new Text("isn't it great?",800,100);
-let dot = new Dot(400,400,5);
-dot.color="white";
-
-let dline2 = new Line(780,110,100,true,true);
-dline2.fillStyle="red";
-dline2.speed=2;
-dline2.dbltip=true;
-
-let org = new CoordinateSystem(700,600,true);
-let rect11 = new Rectangle(300, 400, 100, 100, 1, true, "rgba(254, 254, 93, 0.5)"); 
-let cir11 = new Circle(600, 200, 100, true, 15, true, "rgba(45, 69, 69, 0.5)"); 
-
-let lastText = new Text("You can contribute to this  project :)",300,900);
-lastText.font= "20px Arial";
-lastText.fillStyle="cyan";
-let g1 = new Graph(x => 100 * Math.sin(x), "cyan", -360, 360, 2, 1);
-let g2 = new Graph(x => 100 * Math.cos(x), "rgba(254, 254, 93, 0.5)", -360, 360, 2, 1);
-
- 
-frame.add(rect);
-frame.add(cir);
-frame.add(line);
-frame.add(dline);
-frame.add(aline);
-frame.add(r1);
-frame.add(org);
-frame.add(tb);
-frame.add(txt);
-frame.add(dline2);
-frame.add(dot);
-frame.add(rect11);
-frame.add(cir11);
-// frame.add(g1);
-frame.add(g2);
-frame.add(lastText);
+let rect = new Rectangle(200,300,100,80);
+let cir = new Circle(500,500,100);
+let lm = new LinearMotion(rect,"down",100);
+let lm2 = new LinearMotion(cir,"left",20);
+frame.add(rect,lm,cir,lm2);
 
 frame.play();
