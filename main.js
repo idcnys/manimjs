@@ -1,4 +1,4 @@
-import {Colors, Rectangle, LinearMotion, Circle, Text, Line, Dot, CoordinateSystem, TextBox, Parser,Task,ArrowTip,Graph,MainFrame} from "manim2d";
+import {Colors, Rectangle, LinearMotion, Circle, Text, Line, Dot, CoordinateSystem, TextBox, Parser,Task,ArrowTip,Graph,MainFrame} from "./manim.js";
 
 const frame = new MainFrame("canvas", false, "my-animation", "#000");
 let r1 = new Rectangle(100,100,300,100);
